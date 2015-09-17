@@ -6,6 +6,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
+var session = require("express-session");
+var passport = require("passport");
+var dotenv = require("dotenv");
+dotenv.load();
 
 
 // *** routes *** //
@@ -32,6 +36,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client/public')));
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitaialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // *** main routes *** //

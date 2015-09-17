@@ -5,6 +5,10 @@ var passport = require("../auth/github.js");
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get("/account", function ( req,res,next){
+  res.send(req.user);
+});
+
 router.get('/auth/github',
   passport.authenticate('github'));
 
@@ -12,7 +16,7 @@ router.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.redirect('/account');
   });
 
 module.exports = router;
